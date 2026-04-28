@@ -1,0 +1,44 @@
+@{
+    ViewData["Title"] = "Dashboard Principal";
+}
+
+<div class="glass-container text-center py-5">
+    <h1 class="display-3 font-weight-bold" style="background: linear-gradient(to right, #06B6D4, #4F46E5); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+        NEXUS SPORTS MANAGER
+    </h1>
+    <p class="lead text-secondary mt-3 mb-5">
+        Bienvenido al sistema de administración. Para que el sistema funcione correctamente, <br/>debes seguir estos 3 pasos en orden:
+    </p>
+
+    <div class="row mt-4">
+        <!-- Paso 1 -->
+        <div class="col-md-4">
+            <div class="glass-container m-0 p-4 h-100 d-flex flex-column justify-content-center align-items-center" style="border-top: 4px solid #F43F5E;">
+                <h1 style="font-size: 3rem;">1️⃣</h1>
+                <h4 class="text-white mt-3">Registrar Usuarios</h4>
+                <p class="text-secondary small">Primero, debes tener clientes registrados en tu base de datos.</p>
+                <a href="/Users" class="btn btn-premium w-100 mt-auto">Ir a Usuarios</a>
+            </div>
+        </div>
+
+        <!-- Paso 2 -->
+        <div class="col-md-4">
+            <div class="glass-container m-0 p-4 h-100 d-flex flex-column justify-content-center align-items-center" style="border-top: 4px solid #06B6D4;">
+                <h1 style="font-size: 3rem;">2️⃣</h1>
+                <h4 class="text-white mt-3">Registrar Canchas</h4>
+                <p class="text-secondary small">Segundo, debes crear los espacios deportivos disponibles.</p>
+                <a href="/SportsSpaces" class="btn btn-premium w-100 mt-auto">Ir a Canchas</a>
+            </div>
+        </div>
+
+        <!-- Paso 3 -->
+        <div class="col-md-4">
+            <div class="glass-container m-0 p-4 h-100 d-flex flex-column justify-content-center align-items-center" style="border-top: 4px solid #10B981;">
+                <h1 style="font-size: 3rem;">3️⃣</h1>
+                <h4 class="text-white mt-3">Hacer Reservas</h4>
+                <p class="text-secondary small">Finalmente, ya puedes cruzar la información y agendar horas.</p>
+                <a href="/Reservations" class="btn btn-premium w-100 mt-auto">Ir a Reservas</a>
+            </div>
+        </div>
+    </div>
+</div>

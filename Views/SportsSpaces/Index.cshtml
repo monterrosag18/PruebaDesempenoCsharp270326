@@ -1,0 +1,40 @@
+@model IEnumerable<SportsComplex.Models.SportsSpace>
+<div class="glass-container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Sports Spaces</h2>
+        <a href="/SportsSpaces/Create" class="btn btn-premium">+ New Space</a>
+    </div>
+    
+    <div class="mb-4">
+        <form asp-action="Index" method="get" class="d-flex gap-2 w-50">
+            <input type="text" name="searchType" value="@ViewBag.CurrentFilter" class="form-control form-control-premium" placeholder="Filter by type (e.g. Soccer)..." />
+            <button type="submit" class="btn btn-premium">Filter</button>
+            <a href="/SportsSpaces" class="btn btn-outline-light">Clear</a>
+        </form>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-premium">
+            <thead>
+                <tr>
+                    <th>Space Name</th>
+                    <th>Type</th>
+                    <th>Capacity</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model) {
+                    <tr>
+                        <td class="font-weight-bold text-white">@item.Name</td>
+                        <td><span class="badge badge-premium badge-active">@item.SpaceType</span></td>
+                        <td>@item.Capacity people</td>
+                        <td>
+                            <a href="/SportsSpaces/Edit/@item.Id" class="btn btn-sm btn-outline-light">Edit</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Nexus Sports</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-premium box-shadow mb-3 fixed-top">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">NEXUS SPORTS</a>
+                <div class="d-flex justify-content-center flex-grow-1">
+                    <ul class="navbar-nav d-flex flex-row gap-4">
+                        <li class="nav-item">
+                            <a class="nav-link font-weight-bold" asp-controller="Reservations" asp-action="Index">📅 RESERVATIONS</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link font-weight-bold" asp-controller="SportsSpaces" asp-action="Index">🏟️ SPACES</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link font-weight-bold" asp-controller="Users" asp-action="Index">👥 USERS</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    
+    <!-- Spacing for fixed navbar -->
+    <div style="height: 80px;"></div>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="footer-premium">
+        <div class="container">
+            &copy; 2026 - Nexus Sports Complex Manager 
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

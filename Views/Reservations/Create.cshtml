@@ -1,0 +1,69 @@
+@model SportsComplex.Models.Reservation
+@{
+    bool hasUsers = ViewBag.Users != null && ((IEnumerable<dynamic>)ViewBag.Users).Any();
+    bool hasSpaces = ViewBag.Spaces != null && ((IEnumerable<dynamic>)ViewBag.Spaces).Any();
+    bool canReserve = hasUsers && hasSpaces;
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="glass-container">
+            <h2>Book a Space</h2>
+            
+            @if (!canReserve) {
+                <div class="alert alert-danger border-danger mt-4 p-4 text-center" style="background: rgba(220, 53, 69, 0.1);">
+                    <h4 class="text-danger font-weight-bold mb-3">Action Blocked!</h4>
+                    <p class="text-white mb-4">
+                        To create a reservation, the system requires at least one registered <strong>User</strong> and one <strong>Sports Space</strong>. 
+                        Currently, one or both of these catalogs are empty.
+                    </p>
+                    <div class="d-flex justify-content-center gap-3">
+                        @if(!hasUsers) { <a href="/Users/Create" class="btn btn-premium">+ Register a User</a> }
+                        @if(!hasSpaces) { <a href="/SportsSpaces/Create" class="btn btn-premium">+ Register a Space</a> }
+                    </div>
+                </div>
+            } else {
+                <form asp-action="Create" method="post">
+                    <div asp-validation-summary="All" class="text-danger font-weight-bold p-3 border border-danger rounded mb-4" style="background: rgba(220, 53, 69, 0.1);"></div>
+                    
+                    <div class="mb-4">
+                        <label>Select User</label>
+                        <select asp-for="UserId" class="form-control form-control-premium" required>
+                            <option value="">-- Choose a user --</option>
+                            @foreach (var u in ViewBag.Users) { <option value="@u.Id">@u.Name (@u.Document)</option> }
+                        </select>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label>Select Sports Space</label>
+                        <select asp-for="SportsSpaceId" class="form-control form-control-premium" required>
+                            <option value="">-- Choose a space --</option>
+                            @foreach (var s in ViewBag.Spaces) { <option value="@s.Id">@s.Name (@s.SpaceType)</option> }
+                        </select>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label>Reservation Date</label>
+                        <input asp-for="ReservationDate" type="date" class="form-control form-control-premium" required />
+                    </div>
+                    
+                    <div class="row mb-5">
+                        <div class="col">
+                            <label>Start Time</label>
+                            <input asp-for="StartTime" type="time" class="form-control form-control-premium" required />
+                        </div>
+                        <div class="col">
+                            <label>End Time</label>
+                            <input asp-for="EndTime" type="time" class="form-control form-control-premium" required />
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <a href="/Reservations" class="btn btn-outline-light">Back to List</a>
+                        <button type="submit" class="btn btn-premium px-5">Confirm Booking</button>
+                    </div>
+                </form>
+            }
+        </div>
+    </div>
+</div>

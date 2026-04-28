@@ -1,0 +1,81 @@
+@model IEnumerable<SportsComplex.Models.Reservation>
+<div class="glass-container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Reservations Hub</h2>
+        <a href="/Reservations/Create" class="btn btn-premium">+ New Reservation</a>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="glass-container m-0 p-3 text-center">
+                <h5 class="text-secondary mb-1">Total Bookings</h5>
+                <h3 class="text-white m-0">@ViewBag.Statistics["Total"]</h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="glass-container m-0 p-3 text-center border-danger">
+                <h5 class="text-secondary mb-1">Canceled</h5>
+                <h3 class="text-danger m-0">@ViewBag.Statistics["Canceled"]</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-premium">
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Space</th>
+                    <th>Date</th>
+                    <th>Time Range</th>
+                    <th>State</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model) {
+                    <tr>
+                        <td class="font-weight-bold">
+                            <a href="/Reservations/Index?userId=@item.UserId" class="text-white text-decoration-none">
+                                @item.User.Name
+                            </a>
+                        </td>
+                        <td>
+                            <a href="/Reservations/Index?spaceId=@item.SportsSpaceId">
+                                @item.SportsSpace.Name
+                            </a>
+                        </td>
+                        <td class="text-secondary">@item.ReservationDate.ToShortDateString()</td>
+                        <td>
+                            <span class="badge bg-dark border border-secondary text-white p-2">
+                                @item.StartTime.ToString(@"hh\:mm") - @item.EndTime.ToString(@"hh\:mm")
+                            </span>
+                        </td>
+                        <td>
+                            @if(item.State == "Active") {
+                                <span class="badge badge-premium badge-active">ACTIVE</span>
+                            } else {
+                                <span class="badge badge-premium badge-canceled">CANCELED</span>
+                            }
+                        </td>
+                        <td>
+                            @if(item.State == "Active") {
+                                <form asp-action="Cancel" method="post" style="display:inline;">
+                                    <input type="hidden" name="id" value="@item.Id" />
+                                    <button type="submit" class="btn btn-sm btn-premium-danger">Cancel</button>
+                                </form>
+                            }
+                        </td>
+                    </tr>
+                }
+                @if(!Model.Any()) {
+                    <tr>
+                        <td colspan="6" class="text-center py-5 text-secondary">
+                            No reservations found. Start by adding one!
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
