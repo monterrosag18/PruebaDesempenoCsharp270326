@@ -1,33 +1,28 @@
-# 🏆 Nexus Sports Manager - Sports Complex System
+# Sports Complex Management System
 
-![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)
-![MySQL](https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white)
-![Bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white)
+This project is a web application developed in ASP.NET Core 8 MVC for the management of a sports complex. It allows administrators to register users, manage sports spaces, and handle reservations while preventing scheduling conflicts.
 
-Welcome to **Nexus Sports Manager**, a complete web application built with **ASP.NET Core 8 MVC**. This system was designed to handle the daily operations of a modern sports complex, allowing administrators to easily manage users, sports spaces (like soccer or basketball courts), and reservations, while ensuring no double-bookings ever happen.
+## Student Information
+* Name: [Enter your name]
+* Student ID: [Enter your ID]
+* Course: [Enter your course]
 
----
+## Features
+* User Management: Create, read, and edit user profiles.
+* Sports Spaces Management: Create, read, and edit sports facilities (e.g., Soccer, Basketball). Includes search functionality to filter by space type.
+* Reservation System: Allows users to book sports spaces. The system includes validation logic to prevent double-booking the same space and prevents a single user from booking multiple spaces at the same time.
+* Email Integration: Uses MailKit to send an automated confirmation email when a reservation is successfully created.
 
-## 👤 Student Information
-* **Name:** [WRITE YOUR NAME HERE]
-* **Student ID / Code:** [WRITE YOUR ID HERE]
-* **Course / Module:** [WRITE YOUR COURSE HERE]
+## Technologies Used
+* ASP.NET Core 8 MVC
+* Entity Framework Core
+* MySQL
+* MailKit for SMTP email services
+* HTML, CSS, and Bootstrap
 
----
+## Diagrams
 
-## ✨ Key Features
-* **Complete CRUD:** Full management for Users and Sports Spaces.
-* **Smart Reservation Engine:** A rigorous background logic that prevents time-slot overlaps. It stops double-bookings for the same court and prevents a single user from booking different courts at the exact same time.
-* **Dynamic Search & Filters:** Easily find specific courts by their type (e.g., filtering all "Soccer" spaces).
-* **Premium Glassmorphism UI:** A sleek, dark-themed, responsive user interface designed with modern UX principles to provide a high-end feel.
-* **Real Email Notifications:** Fully integrated with **MailKit** and SMTP to automatically send real email confirmations to users upon successful reservations.
-
----
-
-## 📊 System Diagrams
-
-### 1. Database Architecture (Entity-Relationship)
-This diagram shows how our MySQL database is structured. It revolves around three core entities, with the `Reservations` table acting as the bridge linking users to specific sports spaces.
+### Database Entity-Relationship Diagram
 
 ```mermaid
 erDiagram
@@ -60,87 +55,41 @@ erDiagram
     }
 ```
 
-### 2. Reservation Workflow
-Here is how the system processes a new reservation request, including the anti-collision validation and the automated email dispatch.
+### Reservation Logic Flow
 
 ```mermaid
 sequenceDiagram
-    actor Admin
-    participant Controller as ReservationsController
-    participant Service as ReservationService
-    participant DB as MySQL Database
-    participant Email as MailKit (SMTP)
+    actor User
+    participant Controller
+    participant Service
+    participant Database
+    participant EmailService
 
-    Admin->>Controller: Submits Booking (Date, Time, User, Space)
-    Controller->>Service: CreateReservation(Reservation)
+    User->>Controller: Submit new reservation
+    Controller->>Service: CreateReservation()
     
-    Service->>DB: Check if Court is already booked at this time
-    DB-->>Service: Result (Occupied / Free)
+    Service->>Database: Verify space availability
+    Database-->>Service: Space is free
     
-    alt is Occupied
-        Service-->>Controller: Throws Overlap Exception
-        Controller-->>Admin: Displays Error Message (UI Blocked)
-    else is Free
-        Service->>DB: Check if User has another booking at this time
-        DB-->>Service: Result (Occupied / Free)
-        
-        alt User is busy
-            Service-->>Controller: Throws Overlap Exception
-            Controller-->>Admin: Displays Error Message (UI Blocked)
-        else User is free
-            Service->>DB: Save Reservation (State = Active)
-            DB-->>Service: Success
-            Service->>Email: Send(UserEmail, "Reservation Confirmed")
-            Email-->>Service: Email Sent
-            Service-->>Controller: Success
-            Controller-->>Admin: Redirects to Dashboard
-        end
-    end
+    Service->>Database: Verify user availability
+    Database-->>Service: User is free
+    
+    Service->>Database: Save Reservation (State = Active)
+    Database-->>Service: Success
+    
+    Service->>EmailService: Send confirmation email
+    EmailService-->>Service: Sent
+    
+    Service-->>Controller: Return success
+    Controller-->>User: Redirect to Index
 ```
 
----
+## Setup Instructions
 
-## 🚀 Setup & Installation Guide
-
-To run this project on your local machine, follow these steps:
-
-### 1. Clone the repository
-```bash
-git clone https://github.com/monterrosag18/PruebaDesempenoCsharp270326.git
-cd PruebaDesempenoCsharp270326
-```
-
-### 2. Configure Database & Email Credentials
-Open the `appsettings.json` file in the root directory and replace the placeholders with your actual credentials:
-
-```json
-{
-  "SmtpSettings": {
-    "Server": "smtp.gmail.com",
-    "Port": 587,
-    "SenderName": "Nexus Sports System",
-    "SenderEmail": "your.real.email@gmail.com",
-    "Username": "your.real.email@gmail.com",
-    "Password": "your-16-character-app-password"
-  },
-  "ConnectionStrings": {
-    "DefaultConnection": "Server=YOUR_MYSQL_SERVER;Database=YOUR_DATABASE;User Id=YOUR_USER;Password=YOUR_PASSWORD"
-  }
-}
-```
-
-### 3. Build and Run
-Open a terminal in the project folder and run:
-```bash
-dotnet restore
-dotnet build
-dotnet run
-```
-*Alternatively, simply open the solution in Visual Studio and press `F5` (Run).*
-
----
-
-## 📖 How to Use
-1. **Step 1:** Upon launching the app, go to the **Users** section and register at least one client.
-2. **Step 2:** Go to the **Spaces** section and register at least one sports court.
-3. **Step 3:** Navigate to the **Reservations** section and try booking a slot. The system will automatically validate the availability and send an email confirmation.
+1. Clone the repository.
+2. Open the `appsettings.json` file and configure your database connection string and your SMTP credentials for the email service:
+   - Provide a valid Gmail account and a Google App Password in the `SmtpSettings` section.
+   - Provide your MySQL credentials in the `DefaultConnection` string.
+3. Build the project using the .NET CLI or Visual Studio.
+4. Run the application.
+5. Make sure to create at least one User and one Sports Space before attempting to create a reservation.
