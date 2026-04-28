@@ -2,10 +2,10 @@
 
 This project is a web application developed in ASP.NET Core 8 MVC for the management of a sports complex. It allows administrators to register users, manage sports spaces, and handle reservations while preventing scheduling conflicts.
 
-## Student Information
-* Name: [Enter your name]
-* Student ID: [Enter your ID]
-* Course: [Enter your course]
+## Coder Information
+* Name: [Carlos Andres Monterrosa Gallego]
+* Student ID: [1038809006]
+* Course: [C#]
 
 ## Features
 * User Management: Create, read, and edit user profiles.
